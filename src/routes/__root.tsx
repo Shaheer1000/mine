@@ -77,23 +77,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Olivia Smith — Product Designer Portfolio" },
+      { title: "Shaheer Haider — Frontend developer Portfolio" },
       {
         name: "description",
         content:
-          "Olivia Smith is a product designer with 18+ years crafting delightful UI/UX for apps, websites and dashboards.",
+          "Shaheer Haider is a product designer with 1+ years crafting delightful UI/UX for apps, websites and dashboards.",
       },
-      { property: "og:title", content: "Olivia Smith — Product Designer" },
+      { property: "og:title", content: "Shaheer Haider — Frontend developer" },
       {
         property: "og:description",
-        content: "UI/UX, web and app design portfolio by Olivia Smith.",
+        content: "UI/UX, web and app design portfolio by Shaheer Haider.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/shaheer.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
       {

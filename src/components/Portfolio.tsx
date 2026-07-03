@@ -23,7 +23,8 @@ import {
   Monitor,
   LayoutDashboard,
   PenTool,
-} from "lucide-react";
+}
+ from "lucide-react";
 
 import heroImg from "@/assets/my.jpeg";
 import aboutImg from "@/assets/my.jpeg";
@@ -181,7 +182,7 @@ function Hero() {
           <div className="absolute inset-0 top-8 left-6 rounded-full bg-gold" />
           <motion.img
             src={heroImg}
-            alt="Olivia Smith, product designer"
+            alt="Shaheer Haider, Frontend developer"
             width={896}
             height={1024}
             className="relative z-10 h-full w-full rounded-[2.5rem] object-cover object-top"
@@ -874,16 +875,33 @@ function Footer() {
               Frontend developer helping ambitious teams craft calm, confident digital products.
             </p>
             <div className="mt-5 flex gap-2">
-              {[Facebook, Linkedin, Youtube, Twitter, Instagram].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground hover:bg-brand hover:text-brand-foreground transition"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
+  <a
+    href="https://www.facebook.com/share/1BYB7vB6xt/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground hover:bg-brand hover:text-brand-foreground transition"
+  >
+    <Facebook className="h-4 w-4" />
+  </a>
+
+  <a
+    href="https://www.instagram.com/shaheer._.malik1000?igsh=MXRoZnJjOGU5Z2I4aQ=="
+    target="_blank"
+    rel="noopener noreferrer"
+    className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground hover:bg-brand hover:text-brand-foreground transition"
+  >
+    <Instagram className="h-4 w-4" />
+  </a>
+
+  <a
+    href="https://www.linkedin.com/in/shaheer-haider-9613322a4?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground hover:bg-brand hover:text-brand-foreground transition"
+  >
+    <Linkedin className="h-4 w-4" />
+  </a>
+</div>
           </div>
           <div>
             <h4 className="italic-accent text-lg">Navigation</h4>
