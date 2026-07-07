@@ -23,6 +23,8 @@ import {
   Monitor,
   LayoutDashboard,
   PenTool,
+  Menu,
+  X,
 }
  from "lucide-react";
 
@@ -36,7 +38,9 @@ import blog1 from "@/assets/blog-1.jpg";
 import blog2 from "@/assets/blog-2.jpg";
 import blog3 from "@/assets/blog-3.jpg";
 
+
 /* ---------------- shared bits ---------------- */
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -92,6 +96,7 @@ function PillButton({
 /* ---------------- Nav ---------------- */
 
 function Nav() {
+  const [open, setOpen] = useState(false);   
   const links = ["Home", "Services", "About", "Projects", "Blogs", "Reviews"];
   return (
     <header className="sticky top-4 z-50 mx-auto max-w-6xl px-4">
@@ -123,6 +128,24 @@ function Nav() {
         >
           Contact Me
         </a>
+         <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="grid h-10 w-10 place-items-center rounded-full bg-white/10 md:hidden"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className={`md:hidden ${open ? "block" : "hidden"}`}>
+          <ul className="flex flex-col gap-3 px-4 py-4">
+            {links.map((l, i) => (
+              <li key={l}>
+                <a href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)}>
+                  {l}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
     </header>
   );
@@ -650,6 +673,51 @@ function Pricing() {
 /* ---------------- Contact ---------------- */
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    interest: "",
+    budget: "",
+    country: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      setStatus("sent");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        interest: "",
+        budget: "",
+        country: "",
+        message: "",
+      });
+    } catch (err) {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="py-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 md:grid-cols-[0.9fr_1.1fr]">
@@ -678,26 +746,41 @@ function Contact() {
           </ul>
         </div>
 
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="grid grid-cols-1 gap-5 sm:grid-cols-2"
-        >
-          <Field label="Your Name" placeholder="Ex: John Doe" />
-          <Field label="Email" placeholder="example@gmail.com" type="email" />
-          <Field label="Phone" placeholder="Enter Phone Number" />
-          <Field label="I'm Interested in" placeholder="Select" />
-          <Field label="Budget Range (USD)" placeholder="Select Range" />
-          <Field label="Country" placeholder="Select Country" />
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <Field name="name" label="Your Name" placeholder="Ex: John Doe" value={formData.name} onChange={handleChange} />
+          <Field name="email" label="Email" placeholder="example@gmail.com" type="email" value={formData.email} onChange={handleChange} />
+          <Field name="phone" label="Phone" placeholder="Enter Phone Number" value={formData.phone} onChange={handleChange} />
+          <Field name="interest" label="I'm Interested in" placeholder="Select" value={formData.interest} onChange={handleChange} />
+          <Field name="budget" label="Budget Range (USD)" placeholder="Select Range" value={formData.budget} onChange={handleChange} />
+          <Field name="country" label="Country" placeholder="Select Country" value={formData.country} onChange={handleChange} />
           <div className="sm:col-span-2">
             <label className="mb-2 block text-sm font-medium">Your Message *</label>
             <textarea
+              name="message"
               rows={5}
               placeholder="Enter Here…"
+              value={formData.message}
+              onChange={handleChange}
               className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm focus:border-brand focus:outline-none"
             />
           </div>
           <div className="sm:col-span-2">
-            <PillButton>Submit</PillButton>
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="group inline-flex items-center gap-3 rounded-full bg-brand text-brand-foreground pl-6 pr-1.5 py-1.5 font-medium transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+            >
+              <span>{status === "sending" ? "Sending..." : "Submit"}</span>
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground">
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </button>
+            {status === "sent" && (
+              <p className="text-green-600 mt-2 text-sm">Message sent successfully!</p>
+            )}
+            {status === "error" && (
+              <p className="text-red-600 mt-2 text-sm">Kuch masla ho gaya, dobara try karein.</p>
+            )}
           </div>
         </form>
       </div>
@@ -706,20 +789,29 @@ function Contact() {
 }
 
 function Field({
+  name,
   label,
   placeholder,
   type = "text",
+  value,
+  onChange,
 }: {
+  name: string;
   label: string;
   placeholder: string;
   type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-medium">{label} *</span>
       <input
+        name={name}
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm focus:border-brand focus:outline-none"
       />
     </label>
@@ -902,6 +994,7 @@ function Footer() {
     <Linkedin className="h-4 w-4" />
   </a>
 </div>
+
           </div>
           <div>
             <h4 className="italic-accent text-lg">Navigation</h4>
@@ -963,6 +1056,7 @@ function Footer() {
 /* ---------------- Page ---------------- */
 
 export default function Portfolio() {
+  
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
