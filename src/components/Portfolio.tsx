@@ -82,7 +82,7 @@ function PillButton({
         ? "bg-brand text-brand-foreground"
         : "bg-gold text-gold-foreground";
   return (
-    <a href={href} className={`${base} ${styles}`}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${styles}`}>
       <span>{children}</span>
       <span
         className={`grid h-9 w-9 place-items-center rounded-full transition-transform group-hover:translate-x-0.5 ${dot}`}
@@ -1010,7 +1010,7 @@ function Footer() {
           <h3 className="text-3xl font-bold md:text-4xl">
             Let's <span className="italic-accent">Connect</span> there
           </h3>
-          <PillButton>Book a Call</PillButton>
+          <PillButton href="https://calendly.com/shaheermalik1000/30min">Book a Call</PillButton>
         </div>
         <div className="grid gap-10 md:grid-cols-4">
           <div>
