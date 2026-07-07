@@ -93,64 +93,62 @@ function PillButton({
   );
 }
 
-/* ---------------- Nav ---------------- */
-
 function Nav() {
-  const [open, setOpen] = useState(false);   
+  const [open, setOpen] = useState(false);
   const links = ["Home", "Services", "About", "Projects", "Blogs", "Reviews"];
   return (
     <header className="sticky top-4 z-50 mx-auto max-w-6xl px-4">
-      <nav className="flex items-center justify-between rounded-full bg-brand pl-3 pr-2 py-2 text-brand-foreground shadow-[0_20px_50px_-20px_oklch(0.42_0.09_145_/_0.45)]">
-        <a href="#home" className="flex items-center gap-2 pl-2">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground font-bold">
-            SH
-          </span>
-          <span className="text-lg font-semibold">Shaheer.</span>
-        </a>
-        <ul className="hidden items-center gap-7 text-sm md:flex">
-          {links.map((l, i) => (
-            <li key={l}>
-              <a
-                href={`#${l.toLowerCase()}`}
-                className={`transition ${
-                  i === 0 ? "italic-accent" : "text-white/85 hover:text-white"
-                }`}
-                style={i === 0 ? { color: "var(--color-gold)" } : undefined}
-              >
-                {l}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <a
-          href="#contact"
-          className="rounded-full bg-white text-foreground px-5 py-2.5 text-sm font-medium hover:bg-gold hover:text-gold-foreground transition"
-        >
-          Contact Me
-        </a>
-         <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-10 w-10 place-items-center rounded-full bg-white/10 md:hidden"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
-        <div className={`md:hidden ${open ? "block" : "hidden"}`}>
-          <ul className="flex flex-col gap-3 px-4 py-4">
+      <nav className="rounded-full bg-brand text-brand-foreground shadow-[0_20px_50px_-20px_oklch(0.42_0.09_145_/_0.45)]">
+        <div className="flex items-center justify-between pl-3 pr-2 py-2">
+          <a href="#home" className="flex items-center gap-2 pl-2">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground font-bold">
+              SH
+            </span>
+            <span className="text-lg font-semibold">Shaheer.</span>
+          </a>
+
+          <ul className="hidden items-center gap-7 text-sm md:flex">
             {links.map((l, i) => (
               <li key={l}>
-                <a href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)}>
+                <a href={`#${l.toLowerCase()}`} className={`transition ${i === 0 ? "italic-accent" : "text-white/85 hover:text-white"}`} style={i === 0 ? { color: "var(--color-gold)" } : undefined}>
                   {l}
                 </a>
               </li>
             ))}
           </ul>
+
+          <div className="flex items-center gap-2">
+            <a href="#contact" className="hidden rounded-full bg-white text-foreground px-5 py-2.5 text-sm font-medium hover:bg-gold hover:text-gold-foreground transition md:inline-block">
+              Contact Me
+            </a>
+            <button type="button" onClick={() => setOpen((v) => !v)} className="grid h-10 w-10 place-items-center rounded-full bg-white/10 md:hidden" aria-label="Toggle menu">
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
+
+        {open && (
+          <div className="border-t border-white/15 px-4 py-4 md:hidden">
+            <ul className="flex flex-col gap-4">
+              {links.map((l) => (
+                <li key={l}>
+                  <a href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)} className="block text-white/90 hover:text-white">
+                    {l}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href="#contact" onClick={() => setOpen(false)} className="mt-2 block rounded-full bg-white text-foreground px-5 py-2.5 text-center text-sm font-medium">
+                  Contact Me
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
     </header>
   );
 }
-
 /* ---------------- Hero ---------------- */
 
 function Hero() {
@@ -297,7 +295,7 @@ function Services() {
               <span className="italic-accent">Services</span> I Provide
             </h2>
           </div>
-          <PillButton>View All Services</PillButton>
+          <PillButton href="#services">View All Services</PillButton>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -448,7 +446,7 @@ function Projects() {
               My Latest <span className="italic-accent">Projects</span>
             </h2>
           </div>
-          <PillButton>View All Projects</PillButton>
+          <PillButton href="#projects">View All Projects</PillButton>
         </div>
 
         <div className="grid gap-8 md:grid-cols-2">
@@ -899,7 +897,7 @@ function Blogs() {
               <span className="italic-accent">News & Blogs</span>
             </h2>
           </div>
-          <PillButton>View All Blogs</PillButton>
+          <PillButton href="#blogs">View All Blogs</PillButton>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
           {posts.map((p) => (
