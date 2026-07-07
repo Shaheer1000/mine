@@ -941,6 +941,63 @@ function Blogs() {
     </section>
   );
 }
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      setStatus("sent");
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div>
+      <h4 className="italic-accent text-lg">Get the latest information</h4>
+      <form
+        onSubmit={handleSubmit}
+        className="mt-4 flex items-center rounded-full border border-border bg-white p-1"
+      >
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="Email address"
+          className="flex-1 bg-transparent px-4 text-sm outline-none"
+        />
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground disabled:opacity-60"
+          aria-label="Subscribe"
+        >
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      </form>
+      {status === "sent" && (
+        <p className="mt-2 text-xs text-green-600">Subscribed successfully!</p>
+      )}
+      {status === "error" && (
+        <p className="mt-2 text-xs text-red-600">Kuch masla ho gaya, dobara try karein.</p>
+      )}
+    </div>
+  );
+}
 
 /* ---------------- Footer ---------------- */
 
@@ -1016,25 +1073,7 @@ function Footer() {
               <li>Gulshan, Park, Lahore Cantt 54000</li>
             </ul>
           </div>
-          <div>
-            <h4 className="italic-accent text-lg">Get the latest information</h4>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="mt-4 flex items-center rounded-full border border-border bg-white p-1"
-            >
-              <input
-                type="email"
-                placeholder="Email address"
-                className="flex-1 bg-transparent px-4 text-sm outline-none"
-              />
-              <button
-                className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground"
-                aria-label="Subscribe"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-          </div>
+          <NewsletterForm />
         </div>
       </div>
       <div className="bg-brand text-brand-foreground">
