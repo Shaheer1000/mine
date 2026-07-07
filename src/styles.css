@@ -49,11 +49,11 @@
   --radius: 1rem;
 
   /* Brand palette */
-  --brand: oklch(0.42 0.09 145);            /* deep forest green */
-  --brand-foreground: oklch(0.98 0.01 90);
-  --brand-soft: oklch(0.55 0.11 145);
-  --gold: oklch(0.82 0.17 78);              /* warm yellow/orange */
-  --gold-foreground: oklch(0.22 0.05 60);
+--brand: oklch(0.28 0.08 260);            /* deep navy blue */
+--brand-foreground: oklch(0.98 0.01 90);
+--brand-soft: oklch(0.42 0.10 260);
+--gold: oklch(0.82 0.15 85);              /* warm gold */
+--gold-foreground: oklch(0.20 0.04 60);
   --ink: oklch(0.19 0.02 260);
   --cream: oklch(0.985 0.008 80);
 
@@ -80,7 +80,7 @@
 
   --chart-1: var(--brand);
   --chart-2: var(--gold);
-  --chart-3: oklch(0.55 0.11 145);
+ --chart-3: oklch(0.42 0.10 260);
   --chart-4: oklch(0.75 0.15 60);
   --chart-5: oklch(0.6 0.05 260);
 
@@ -88,7 +88,7 @@
   --sidebar-foreground: var(--brand-foreground);
   --sidebar-primary: var(--gold);
   --sidebar-primary-foreground: var(--gold-foreground);
-  --sidebar-accent: oklch(0.5 0.1 145);
+  --sidebar-accent: oklch(0.42 0.10 260);
   --sidebar-accent-foreground: oklch(0.98 0.01 90);
   --sidebar-border: oklch(1 0 0 / 15%);
   --sidebar-ring: var(--gold);

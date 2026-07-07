@@ -98,7 +98,7 @@ function Nav() {
   const links = ["Home", "Services", "About", "Projects", "Blogs", "Reviews"];
   return (
     <header className="sticky top-4 z-50 mx-auto max-w-6xl px-4">
-      <nav className="rounded-full bg-brand text-brand-foreground shadow-[0_20px_50px_-20px_oklch(0.42_0.09_145_/_0.45)]">
+      <nav className="rounded-full bg-brand text-brand-foreground shadow-[0_4px_12px_-6px_oklch(0.42_0.09_145_/_0.25)]">
         <div className="flex items-center justify-between pl-3 pr-2 py-2">
           <a href="#home" className="flex items-center gap-2 pl-2">
             <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground font-bold">
@@ -118,7 +118,7 @@ function Nav() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <a href="#contact" className="hidden rounded-full bg-white text-foreground px-5 py-2.5 text-sm font-medium hover:bg-gold hover:text-gold-foreground transition md:inline-block">
+            <a href="#contact" className=" rounded-full bg-white text-foreground px-5 py-2.5 text-sm font-medium hover:bg-gold hover:text-gold-foreground transition">
               Contact Me
             </a>
             <button type="button" onClick={() => setOpen((v) => !v)} className="grid h-10 w-10 place-items-center rounded-full bg-white/10 md:hidden" aria-label="Toggle menu">
@@ -128,8 +128,8 @@ function Nav() {
         </div>
 
         {open && (
-          <div className="border-t border-white/15 px-4 py-4 md:hidden">
-            <ul className="flex flex-col gap-4">
+           <div className="absolute left-0 right-0 top-full mt-2 mx-4 rounded-2xl bg-brand shadow-2xl md:hidden">
+          <ul className="flex flex-col gap-1 px-4 py-4">
               {links.map((l) => (
                 <li key={l}>
                   <a href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)} className="block text-white/90 hover:text-white">
@@ -137,11 +137,6 @@ function Nav() {
                   </a>
                 </li>
               ))}
-              <li>
-                <a href="#contact" onClick={() => setOpen(false)} className="mt-2 block rounded-full bg-white text-foreground px-5 py-2.5 text-center text-sm font-medium">
-                  Contact Me
-                </a>
-              </li>
             </ul>
           </div>
         )}
@@ -235,8 +230,8 @@ function MarqueeBar() {
   const row = [...items, ...items, ...items];
   return (
     <div className="relative mt-16">
-      <div className="relative -mx-2  overflow-hidden bg-gold py-4 text-gold-foreground">
-        <div className="absolute inset-y-0 left-0 w-6 bg-brand" />
+      <div className="relative -mx-2 overflow-hidden bg-[oklch(0.65_0.13_145)] py-4 text-[oklch(0.15_0.02_260)]">
+        <div className="absolute inset-y-0 left-0 w-6 " />
         <div className="marquee flex w-max gap-10 text-2xl font-semibold whitespace-nowrap">
           {row.map((t, i) => (
             <span key={i} className="flex items-center gap-10">
@@ -307,7 +302,7 @@ function Services() {
               viewport={{ once: true, amount: 0.3 }}
               variants={fadeUp}
               transition={{ delay: i * 0.05 }}
-              className="group rounded-2xl border border-border bg-secondary/60 p-6 transition hover:-translate-y-1 hover:border-brand hover:bg-white hover:shadow-xl"
+              className="group rounded-2xl border border-border bg-secondary/60 p-6 "
             >
               <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-white shadow ring-1 ring-border">
                 <s.icon className="h-5 w-5 text-brand" />
@@ -560,7 +555,7 @@ function Pricing() {
   const plans = [
     {
       name: "Hourly",
-      price: "$20",
+      price: "$5",
       per: "/ Hour",
       features: [
         "Product & UI design",
@@ -571,7 +566,7 @@ function Pricing() {
     },
     {
       name: "Monthly",
-      price: "$3,000",
+      price: "$800",
       per: "/ Month",
       featured: true,
       features: [
@@ -585,7 +580,7 @@ function Pricing() {
     },
     {
       name: "Quarterly",
-      price: "$9,000",
+      price: "$2400",
       per: "/ Quarter",
       features: [
         "Everything in Monthly",
